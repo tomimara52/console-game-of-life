@@ -1,7 +1,9 @@
+#include <stdio.h>
+#include <unistd.h>
 #include "game.h"
 
 int main() {
-    game_t game = create_game(36, 9);
+    game_t game = create_game(36, 36);
 
     set_game(game, 24, 0);
     set_game(game, 22, 1);
@@ -40,7 +42,12 @@ int main() {
     set_game(game, 12, 8);
     set_game(game, 13, 8);
     
-    print_game(game);
+    while (1) {
+        printf("\e[1;1H\e[2J");
+        step_game(game);
+        print_game(game);
+        usleep(200000);
+    }
 
     destroy_game(game);
     
