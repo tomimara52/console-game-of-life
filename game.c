@@ -41,3 +41,12 @@ void destroy_game(game_t game) {
 
     free(game);
 }
+
+void set_game(game_t game, unsigned int x_pos, unsigned int y_pos) {
+    (game->board)[x_pos][y_pos] = 1;
+}
+/*
+void step_game(game_t game) {
+
+}
+*/
