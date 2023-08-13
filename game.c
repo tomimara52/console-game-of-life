@@ -5,26 +5,26 @@
 
 struct game_s {
     char** board;
-    size_t width;
-    size_t height;
+    size_t x_dim;
+    size_t y_dim;
 };
 
-game_t create_game(unsigned int width, unsigned int height) {
+game_t create_game(unsigned int x_dim, unsigned int y_dim) {
     game_t game = malloc(sizeof(struct game_s));
-    game->board = calloc(sizeof(char[width]), height);
+    game->board = calloc(sizeof(char*), x_dim);
 
-    for (size_t i = 0; i < height; ++i) 
-        (game->board)[i] = calloc(sizeof(char), width);
+    for (size_t i = 0; i < x_dim; ++i) 
+        (game->board)[i] = calloc(sizeof(char), y_dim);
 
-    game->width = width;
-    game->height = height;
+    game->x_dim = x_dim;
+    game->y_dim = y_dim;
 
     return game;    
 }
 
 void print_game(game_t game) {
-    for (size_t i = 0; i < game->height; ++i) {
-        for (size_t j = 0; j < game->width; ++j) {
+    for (size_t j = 0; j < game->y_dim; ++j) {
+        for (size_t i = 0; i < game->x_dim; ++i) {
             char c = ((game->board)[i][j]) ? 'X' : 'O';
             printf("%c ", c);
         }
@@ -33,7 +33,7 @@ void print_game(game_t game) {
 }
 
 void destroy_game(game_t game) {
-    for (size_t i = 0; i < game->height; ++i) {
+    for (size_t i = 0; i < game->x_dim; ++i) {
         free((game->board)[i]);
     }
 
