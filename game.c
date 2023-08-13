@@ -26,7 +26,7 @@ void print_game(game_t game) {
     for (size_t i = 0; i < game->width; ++i) {
         for (size_t j = 0; j < game->height; ++j) {
             char c = ((game->board)[i][j]) ? 'X' : 'O';
-            printf("%c", c);
+            printf("%c ", c);
         }
         printf("\n");
     }
