@@ -22,3 +22,5 @@ void set_cursor(game_t game, unsigned int x, unsigned int y);
 void move_cursor(game_t game, char dir);
 
 void swap_cell(game_t game);
+
+void game_to_file(game_t game, char* filename);

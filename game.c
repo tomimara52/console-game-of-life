@@ -155,3 +155,18 @@ void swap_cell(game_t game) {
     if (x < game->x_dim && y < game->y_dim) 
         (game->board)[x][y] = !(game->board)[x][y];
 }
+
+void game_to_file(game_t game, char* filename) {
+    FILE* fp = fopen(filename, "w");
+
+    fprintf(fp, "%lux%lu\n", game->x_dim, game->y_dim);
+
+    for (size_t x = 0; x < game->x_dim; ++x) {
+        for (size_t y = 0; y < game->y_dim; ++y) {
+            if ((game->board)[x][y])
+                fprintf(fp, "%lu,%lu\n", x, y);
+        }
+    }
+
+    fclose(fp);
+}
