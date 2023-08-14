@@ -76,15 +76,15 @@ int main() {
     while (1) {
         if (input == 'q')
             break;
-        else if (input == 'p') {
+        else if (input == 'p') 
             pause = !pause;
-            input = 0;
-        }
+
         // clear terminal
         printf("\033c");
         if (!pause)
             step_game(game);
         print_game(game);
+        input = 0;
         usleep(100 * 1000);
     }
 
