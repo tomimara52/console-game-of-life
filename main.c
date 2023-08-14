@@ -54,6 +54,23 @@ game_t create_game_interactive() {
     return create_game(x_dim, y_dim); 
 }
 
+void maybe_save_game(game_t game) {
+    char choice;
+    do {
+        printf("Do you want to save this game to a file? [y/n]: ");
+        scanf("%s", &choice);
+    } while (choice != 'y' && choice != 'n');
+
+    if (choice == 'n')
+        return;
+
+    char filename[256];
+    printf("What do you want the file to be named? ");
+    scanf("%s", filename);
+
+    game_to_file(game, filename);    
+}
+
 int main(int argc, char** argv) {
 
     game_t game;
@@ -116,6 +133,10 @@ int main(int argc, char** argv) {
     }
 
     thrd_detach(input_thread);
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    maybe_save_game(game);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
     set_cursor(game, -1, -1);
 
