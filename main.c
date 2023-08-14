@@ -64,7 +64,6 @@ int main() {
     }
 
     set_cursor(game, -1, -1);
-    input = 0;
 
     char pause = 0;
     
