@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <termios.h> 
 #include <threads.h>
@@ -7,9 +8,14 @@
 
 #define SLEEP_TIME 100000
 
-int getInput(char* res) {
-    while (*res != 'q') {
-        *res = getchar();
+struct input_args {
+    char* input;
+    char exit_char;
+};
+
+int getInput(struct input_args* args) {
+    while (*(args->input) != args->exit_char) {
+        *(args->input) = getchar();
     }
 
     thrd_exit(0);
@@ -73,9 +79,12 @@ int main(int argc, char** argv) {
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
     thrd_t input_thread;
-    char input = 0;
+    char input;
+    struct input_args* args = malloc(sizeof(struct input_args));
+    args->input = &input;
+    args->exit_char = 'r';
 
-    thrd_create(&input_thread, (thrd_start_t)getInput, &input);
+    thrd_create(&input_thread, (thrd_start_t)getInput, args);
 
     set_cursor(game, 0, 0);
 
@@ -106,9 +115,15 @@ int main(int argc, char** argv) {
         usleep(SLEEP_TIME);
     }
 
+    thrd_detach(input_thread);
+
     set_cursor(game, -1, -1);
 
     char pause = 0;
+
+    args->exit_char = 'q';
+
+    thrd_create(&input_thread, (thrd_start_t)getInput, args);
     
     while (input != 'q') {
         if (input == 'p')
@@ -127,6 +142,8 @@ int main(int argc, char** argv) {
     }
 
     thrd_detach(input_thread);
+
+    free(args);
 
     destroy_game(game);
 
