@@ -70,7 +70,7 @@ void step_game(game_t game) {
     char** board = copy_board(game);
     for (size_t x = 0; x < game->x_dim; ++x) {
         for (size_t y = 0; y < game->y_dim; ++y) {
-            unsigned int neigh = 0;
+            unsigned char neigh = 0;
             if (x > 0) {
                 neigh += board[x-1][y];
                 if (y > 0) 
