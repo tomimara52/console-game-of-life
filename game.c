@@ -140,3 +140,11 @@ void move_cursor(game_t game, char dir) {
         break;
     }
 }
+
+void swap_cell(game_t game) {
+    unsigned int x = game->cursor_x;
+    unsigned int y = game->cursor_y;
+
+    if (x < game->x_dim && y < game->y_dim) 
+        (game->board)[x][y] = !(game->board)[x][y];
+}

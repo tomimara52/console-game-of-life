@@ -20,3 +20,5 @@ void set_game(game_t game, unsigned int x_pos, unsigned int y_pos);
 void set_cursor(game_t game, unsigned int x, unsigned int y);
 
 void move_cursor(game_t game, char dir);
+
+void swap_cell(game_t game);
