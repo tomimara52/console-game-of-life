@@ -43,10 +43,11 @@ int main() {
     set_game(game, 13, 8);
     
     while (1) {
-        printf("\e[1;1H\e[2J");
+        // clear terminal
+        printf("\033c");
         step_game(game);
         print_game(game);
-        usleep(200000);
+        usleep(100 * 1000);
     }
 
     destroy_game(game);
