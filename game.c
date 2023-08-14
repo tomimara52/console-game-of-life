@@ -36,8 +36,15 @@ game_t create_game(unsigned int x_dim, unsigned int y_dim) {
 void print_game(game_t game) {
     for (size_t j = 0; j < game->y_dim; ++j) {
         for (size_t i = 0; i < game->x_dim; ++i) {
-            if (game->cursor_x == i && game->cursor_y == j)
+            if (game->cursor_x == i && game->cursor_y == j) {
                 printf(RED_BG);
+                if ((game->board)[i][j])
+                    printf("X");
+                else
+                    printf("O");
+                printf(RESET " ");
+                continue;
+            }
             
             if ((game->board)[i][j]) {
                 printf(WHITE_BG BLACK_FG "X");
