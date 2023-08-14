@@ -47,10 +47,20 @@ game_t read_game_from_file(char* filename) {
 
 game_t create_game_interactive() {
     unsigned int x_dim, y_dim;
-    printf("Type the x dimension of the board: ");
-    scanf("%u", &x_dim);
-    printf("Type the y dimension of the board: ");
-    scanf("%u", &y_dim);
+    char line[10];
+    
+    printf("Type the x dimension of the board. ");
+    do {
+        printf("Please type a number: ");
+        fgets(line, 10, stdin);
+    } while(!sscanf(line, "%u", &x_dim));
+    
+    printf("Type the y dimension of the board. ");
+    do {
+        printf("Please type a number: ");
+        fgets(line, 10, stdin);
+    } while(!sscanf(line, "%u", &y_dim));
+
     return create_game(x_dim, y_dim); 
 }
 
