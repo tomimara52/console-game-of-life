@@ -81,8 +81,10 @@ int main() {
 
         // clear terminal
         printf("\033c");
-        if (!pause)
+
+        if (!pause || (pause && input == 'n'))
             step_game(game);
+
         print_game(game);
         input = 0;
         usleep(100 * 1000);
