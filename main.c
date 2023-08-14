@@ -1,8 +1,32 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <termios.h> 
+#include <threads.h>
+
 #include "game.h"
 
+int getInput(char* res) {
+    while (*res != 'q') {
+        *res = getchar();
+    }
+
+    thrd_exit(0);
+}
+
 int main() {
+    static struct termios oldt, newt;
+
+    // copy current attributes to oldt
+    tcgetattr(STDIN_FILENO, &oldt);
+
+    newt = oldt;
+
+    // do not wait for EOF or newline and don't print input chars
+    newt.c_lflag &= ~(ICANON | ECHO);          
+
+    // set newt settings to stdin now
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
     game_t game = create_game(36, 36);
 
     set_game(game, 24, 0);
@@ -41,8 +65,14 @@ int main() {
     set_game(game, 15, 7);
     set_game(game, 12, 8);
     set_game(game, 13, 8);
+
+    thrd_t t;
+    char input = 0;
+    thrd_create(&t, (thrd_start_t)getInput, &input);
     
     while (1) {
+        if (input == 'q')
+            break;
         // clear terminal
         printf("\033c");
         step_game(game);
@@ -50,7 +80,12 @@ int main() {
         usleep(100 * 1000);
     }
 
+    thrd_detach(t);
+
     destroy_game(game);
-    
+
+    // reset stdin settings to before
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+
     return 0;
 }
