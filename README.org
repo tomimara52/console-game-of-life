@@ -30,9 +30,11 @@ simulation one step at a time. Press 'q' at any time to exit the program.
 *** File format
   The format of the files to read the inital set up is the following:
 
+#+begin_comment
 <x dimension of board>x<y dimension of board>
 <x pos of live cell>,<y pos of live cell>
 <x pos of live cell>,<y pos of live cell>
 <x pos of live cell>,<y pos of live cell>
+#+end_comment
 
-  Replace <...> with actual numbers. You can see the example src_comment{gosper-gun.txt}.
+  Replace <...> with actual numbers. You can see the example #+begin_comment gosper-gun.txt #+end_comment.
