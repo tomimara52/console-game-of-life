@@ -66,10 +66,10 @@ int main() {
     set_game(game, 12, 8);
     set_game(game, 13, 8);
 
-    thrd_t t;
+    thrd_t input_thread;
     char input = 0;
 
-    thrd_create(&t, (thrd_start_t)getInput, &input);
+    thrd_create(&input_thread, (thrd_start_t)getInput, &input);
 
     char pause = 0;
     
@@ -86,11 +86,12 @@ int main() {
             step_game(game);
 
         print_game(game);
+
         input = 0;
         usleep(100 * 1000);
     }
 
-    thrd_detach(t);
+    thrd_detach(input_thread);
 
     destroy_game(game);
 
