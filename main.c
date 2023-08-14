@@ -5,6 +5,8 @@
 
 #include "game.h"
 
+#define SLEEP_TIME 100000
+
 int getInput(char* res) {
     while (*res != 'q') {
         *res = getchar();
@@ -60,7 +62,7 @@ int main() {
         print_game(game);
 
         input = 0;
-        usleep(100 * 1000);
+        usleep(SLEEP_TIME);
     }
 
     set_cursor(game, -1, -1);
@@ -80,7 +82,7 @@ int main() {
         print_game(game);
 
         input = 0;
-        usleep(100 * 1000);
+        usleep(SLEEP_TIME);
     }
 
     thrd_detach(input_thread);
