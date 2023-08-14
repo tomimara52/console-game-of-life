@@ -118,3 +118,25 @@ void step_game(game_t game) {
     free(board);
 
 }
+
+void set_cursor(game_t game, unsigned int x, unsigned int y) {
+    game->cursor_x = x;
+    game->cursor_y = y;
+}
+
+void move_cursor(game_t game, char dir) {
+    switch (dir) {
+    case UP:
+        game->cursor_y = (game->cursor_y ? game->cursor_y : game->y_dim) - 1;
+        break;
+    case RIGHT:
+        game->cursor_x = (game->cursor_x + 1) % game->x_dim;
+        break;
+    case DOWN:
+        game->cursor_y = (game->cursor_y + 1) % game->y_dim;
+        break;
+    case LEFT: 
+        game->cursor_x = (game->cursor_x ? game->cursor_x : game->x_dim) - 1;
+        break;
+    }
+}
