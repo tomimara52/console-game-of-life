@@ -2,7 +2,7 @@
 #+author: Tomás Maraschio
 
 ** Compilation
-  gcc -O3 main.c game.c -o main
+  gcc -O3 src/main.c src/game.c -o main
 
 ** Usage
 *** Create initial set up from file
