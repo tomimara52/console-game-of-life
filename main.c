@@ -82,7 +82,7 @@ int main() {
         // clear terminal
         printf("\033c");
 
-        if (!pause || (pause && input == 'n'))
+        if (!pause || input == 'n')
             step_game(game);
 
         print_game(game);
