@@ -25,3 +25,14 @@ To start the simulation press 'r'.
 **** Run mode
   Here you can press 'p' to pause the game and then press 'n' to advance the
 simulation one step at a time. Press 'q' at any time to exit the program.
+
+
+*** File format
+  The format of the files to read the inital set up is the following:
+
+<x dimension of board>x<y dimension of board>
+<x pos of live cell>,<y pos of live cell>
+<x pos of live cell>,<y pos of live cell>
+<x pos of live cell>,<y pos of live cell>
+
+  Replace <...> with actual numbers. You can see the example src_comment{gosper-gun.txt}.
