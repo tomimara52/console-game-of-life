@@ -5,12 +5,15 @@
 
 #define WHITE_BG "\x1b[47m"
 #define BLACK_FG "\x1b[30m"
+#define RED_BG   "\x1b[41m"
 #define RESET    "\x1b[0m"
 
 struct game_s {
     char** board;
     size_t x_dim;
     size_t y_dim;
+    unsigned int cursor_x;
+    unsigned int cursor_y;
 };
 
 game_t create_game(unsigned int x_dim, unsigned int y_dim) {
@@ -23,17 +26,26 @@ game_t create_game(unsigned int x_dim, unsigned int y_dim) {
     game->x_dim = x_dim;
     game->y_dim = y_dim;
 
+    // yeah yeah i know it is unsigned
+    game->cursor_x = -1;
+    game->cursor_y = -1;
+
     return game;    
 }
 
 void print_game(game_t game) {
     for (size_t j = 0; j < game->y_dim; ++j) {
         for (size_t i = 0; i < game->x_dim; ++i) {
+            if (game->cursor_x == i && game->cursor_y == j)
+                printf(RED_BG);
+            
             if ((game->board)[i][j]) {
-                printf(WHITE_BG BLACK_FG "X" RESET " ");
+                printf(WHITE_BG BLACK_FG "X");
             } else {
-                printf("O ");
+                printf("O");
             }
+
+            printf(RESET " ");
         }
         printf("\n");
     }
