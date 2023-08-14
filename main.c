@@ -30,7 +30,7 @@ game_t read_game_from_file(char* filename) {
 
 
     unsigned int x_dim, y_dim;
-    if (fscanf(fp, "%ux%u", &x_dim, &y_dim) != 2) {
+    if (fscanf(fp, "%ux%u\n", &x_dim, &y_dim) != 2) {
         printf("ERROR: wrong file format\n");
         return NULL;
     }
@@ -39,7 +39,7 @@ game_t read_game_from_file(char* filename) {
 
     while (!feof(fp)) {
         unsigned int x, y;
-        if (fscanf(fp, "%u,%u", &x, &y) != 2) {
+        if (fscanf(fp, "%u,%u\n", &x, &y) != 2) {
           printf("ERROR: wrong file format\n");
           return NULL;
         }
