@@ -68,14 +68,22 @@ int main() {
 
     thrd_t t;
     char input = 0;
+
     thrd_create(&t, (thrd_start_t)getInput, &input);
+
+    char pause = 0;
     
     while (1) {
         if (input == 'q')
             break;
+        else if (input == 'p') {
+            pause = !pause;
+            input = 0;
+        }
         // clear terminal
         printf("\033c");
-        step_game(game);
+        if (!pause)
+            step_game(game);
         print_game(game);
         usleep(100 * 1000);
     }
