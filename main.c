@@ -15,7 +15,50 @@ int getInput(char* res) {
     thrd_exit(0);
 }
 
-int main() {
+game_t read_game_from_file(char* filename) {
+    FILE* fp = fopen(filename, "r");
+    if (fp == NULL) {
+        printf("ERROR: file nonexistent\n");
+        return NULL;
+    }
+
+
+    unsigned int x_dim, y_dim;
+    fscanf(fp, "%ux%u", &x_dim, &y_dim);
+
+    game_t game = create_game(x_dim, y_dim);
+
+    while (!feof(fp)) {
+        unsigned int x, y;
+        fscanf(fp, "%u,%u", &x, &y);
+        set_game(game, x, y); 
+    }
+
+    fclose(fp);
+    
+    return game;
+}
+
+game_t create_game_interactive() {
+    unsigned int x_dim, y_dim;
+    printf("Type the x dimension of the board: ");
+    scanf("%u", &x_dim);
+    printf("Type the y dimension of the board: ");
+    scanf("%u", &y_dim);
+    return create_game(x_dim, y_dim); 
+}
+
+int main(int argc, char** argv) {
+
+    game_t game;
+    if (argc == 1) {
+        game = create_game_interactive();
+    } else {
+        game = read_game_from_file(argv[1]);
+        if (!game) 
+            game = create_game_interactive();
+    }
+
     static struct termios oldt, newt;
 
     // copy current attributes to oldt
@@ -28,8 +71,6 @@ int main() {
 
     // set newt settings to stdin now
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-
-    game_t game = create_game(36, 36);
 
     thrd_t input_thread;
     char input = 0;
