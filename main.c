@@ -71,12 +71,42 @@ int main() {
 
     thrd_create(&input_thread, (thrd_start_t)getInput, &input);
 
+    set_cursor(game, 0, 0);
+
+    while (input != 'r') {
+        switch (input) {
+        case 'w':
+            move_cursor(game, UP);
+            break;
+        case 'a':
+            move_cursor(game, LEFT);
+            break;
+        case 's':
+            move_cursor(game, DOWN);
+            break;
+        case 'd':
+            move_cursor(game, RIGHT);
+            break;
+        case ' ':
+            swap_cell(game);
+            break;
+        }
+        // clear terminal
+        printf("\033c");
+
+        print_game(game);
+
+        input = 0;
+        usleep(100 * 1000);
+    }
+
+    set_cursor(game, -1, -1);
+    input = 0;
+
     char pause = 0;
     
-    while (1) {
-        if (input == 'q')
-            break;
-        else if (input == 'p') 
+    while (input != 'q') {
+        if (input == 'p')
             pause = !pause;
 
         // clear terminal
